@@ -1,0 +1,37 @@
+﻿SMC + Pro Support Resistance MTF Signals v1.11
+Validated: 2026-10-05 (Asia/Bangkok)
+
+Build
+  Compiler: C:\Program Files\MetaTrader 5\MetaEditor64.exe
+  Target: X64 Regular
+  Compiler log: SMC_SR_MTF_Signals.compile.log
+  Result: 0 errors, 0 warnings
+  EX5 size: 272590 bytes
+  MQ5 SHA256: 272C9E147AC14FD6612295484B8D0B48714493DBAC4E5557EFDFE88F0F3E7998
+  EX5 SHA256: 3C5E36374DDAD661EF52FF1180BAEA41DD24351B4C2FC898982A775A69D8068D
+
+Regression tests
+  Run: node test_compact.cjs SMC_SR_MTF_Signals.mq5
+  Result: 25 passed, 0 failed
+  Executes functions extracted from the actual MQ5 source in a Node VM.
+  MQL type declarations are translated; MT5 terminal/chart I/O is stubbed.
+  BUY/SELL delayed-M5 transition; distinct M1 confirmation and retest;
+  no historical backfill; expiry; unknown datetime placeholder;
+  disconnected/invalid/future/fresh/stale quotes and known/unknown sessions;
+  health-priority preservation during calculation gaps;
+  native-object viewport geometry at five size/DPI combinations;
+  removal of old plan rows when collapsing.
+
+Scope and limits
+  MetaEditor compile verifies MQL syntax/API usage and produces the EX5.
+  The regression suite checks selected state transitions and object settings.
+  TextGetSize uses a fallback stub in geometry tests; font rendering is untested.
+  Live MT5 painting, clicks, chart events, real broker sessions and full signal
+  forward execution have not been tested in this session.
+  No backtest, performance, fill or profitability result is asserted.
+
+Install
+  Project deliverable: SMC_SR_MTF_Signals.mq5 / .ex5
+  Additive MT5 copy: Free Indicators\SMC_SR_MTF_Signals_v1_11.mq5 / .ex5
+  Original installed v1.10 files are retained. Remove the old chart instance
+  before attaching v1.11; the ownership guard rejects concurrent instances.

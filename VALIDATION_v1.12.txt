@@ -1,0 +1,34 @@
+﻿SMC + Pro Support Resistance MTF Signals v1.12
+Validated: 2026-10-05 Asia/Bangkok
+
+Fix: PC-dependent TimeTradeServer estimate no longer gates quote freshness.
+Broker TimeCurrent anchors a monotonic GetTickCount64 clock.
+Startup/reconnection/server rollback require observed server-time progression.
+Quote age and connection checks remain enforced at all existing quote gates.
+TimeTradeServer is retained only in diagnostic log output.
+
+Compile: MetaEditor64.exe, X64 Regular, 0 errors, 0 warnings.
+Compiler log: SMC_SR_MTF_Signals.compile.log
+MQ5 SHA256: 938AA6EFDF5053D00CA13D40E2941B0241B3B8C10174CD65F84186A663013DDA
+EX5 SHA256: 32E3D34AF15FA293D7F3B96F3A16E5408375C95EC2F09F841FA70F5CC1D6008D
+
+Regression commands (Node.js):
+  node test_compact.cjs SMC_SR_MTF_Signals.mq5
+  node test_quote_clock.cjs SMC_SR_MTF_Signals.mq5
+Results: compact 25/25; clock 12/12; total 37 passed, 0 failed.
+The new integration tests reproduced CLOCK_ERROR and STALE_QUOTE in v1.11
+with a fresh broker quote and an independently skewed local estimate.
+The same OnTimer scenarios now progress to the source-chart availability gate.
+Additional checks cover initial cached quote, frozen Market Watch server time,
+other-symbol ticks, disconnect/reconnect, server rollback, local estimate jumps,
+missing server time, a genuinely future quote, and delayed/repeated post-scan
+observations that must retain elapsed time instead of reviving stale quotes.
+
+Scope: tests execute extracted production functions with MQL scalar type syntax
+translated in Node VM; terminal/chart I/O is substituted. Compiler checks MQL.
+No live-chart run of v1.12 has been verified in this session. This is not a
+backtest or a trading performance evaluation.
+
+Installation: additive Free Indicators/SMC_SR_MTF_Signals_v1_12.mq5 and .ex5.
+Remove the prior chart instance, then attach v1.12 to the same M1 chart.
+The project source, binary, README and regression scripts are updated together.
